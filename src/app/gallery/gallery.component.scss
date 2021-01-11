@@ -1,0 +1,22 @@
+.mat-table {
+  min-width: auto !important;
+  width: 100% !important;
+}
+
+mat-cell {
+  cursor: pointer;
+  padding: 0 8px;
+}
+
+button {
+  margin: 1rem 0;
+}
+
+.full-image-container {
+  display: flex;
+  justify-content: center;
+}
+
+img {
+ max-width: 100%;
+}

@@ -1,0 +1,40 @@
+<div [hidden]="showingDetails == true">
+  <!--Filter inputs-->
+  <form>
+    <mat-form-field>
+      <mat-label>Filter by Title</mat-label>
+      <input matInput [formControl]="titleFilter" maxlength="30">
+    </mat-form-field>
+    <br>
+    <div><span>Click on an element to open the full size image.</span></div>
+    <br>
+  </form>
+
+  <!--Table-->
+  <div class="mat-elevation-z5">
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="title" matSortDirection="asc" matSortDisableClear>
+      <ng-container *ngFor="let row of tableCols" [matColumnDef]=row>
+        <mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="row != 'title'">
+          {{row | titlecase}}
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <div *ngIf="row === 'title'">{{(item[row])}}</div>
+          <div *ngIf="row === 'thumbnailUrl'"><img [src]="(item[row])" alt=""></div>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="tableCols"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableCols" (click)="showDetails(row)"></mat-row>
+    </table>
+    <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
+
+<!--Element detail-->
+<div *ngIf="selectedRow">
+  <div>
+    <button mat-stroked-button (click)="showingDetails = false; selectedRow = null;">Back to gallery</button>
+  </div>
+  <div class="full-image-container mat-elevation-z5">
+    <img [src]="selectedRow.url" alt="">
+  </div>
+</div>
